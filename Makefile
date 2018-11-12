@@ -1,16 +1,17 @@
-SRC = $(wildcard *.c)
-OBJ = $(SRC:.c=.o)
+FILE = algo.c main.c nrutil.c test.c vnrutil.c
+SRC = $(addprefix src/, $(FILE))
+OBJ = $(addprefix obj/, $(addsuffix .o, $(basename $(FILE))))
 EXEC = hpc
 
-all: ${EXEC}
+all: $(EXEC)
 
-${EXEC}: ${OBJ}
+$(EXEC): $(OBJ)
 	gcc -o $@ $^ -lm
 
-%.o: %.c
-	gcc -c -o $@ $<
+obj/%.o: src/%.c
+	gcc -c -o $@ $< -Iinclude -mssse3
 
 clean:
-	rm -f ${EXEC} ${OBJ}
+	rm -f $(EXEC) $(OBJ)
 
 .PHONY: all clean
