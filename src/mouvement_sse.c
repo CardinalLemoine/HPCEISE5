@@ -6,7 +6,7 @@ uint8** sigma_delta_sse (uint8 **I, uint8 **M_1, uint8 **V_1, long nrl, long nrh
 
     for(long i=nrl; i<nrh; i++)
     {
-        for(long j=nrh; j<nch; j+=16)
+        for(long j=ncl; j<nch; j+=16)
         {
             vuint8 ones = _mm_set1_epi8(1);
             vuint8 tmp = _mm_set1_epi8(-128);
@@ -36,10 +36,11 @@ uint8** sigma_delta_sse (uint8 **I, uint8 **M_1, uint8 **V_1, long nrl, long nrh
             //display_vuint8(vO, " %3d", "  vO"); puts("");
 
             // Étape 3
-            vuint8 t =_mm_load_si128(&vO);
-            uint8 *p = (uint8*) &t;
-            for(uint8 i=0; i<16; i++)
-                p[i] *= N;
+            vuint16 t1 =_mm_unpacklo_epi8(vO, _mm_setzero_si128());
+            vuint16 t2 =_mm_unpackhi_epi8(vO, _mm_setzero_si128());
+            t1 = _mm_mullo_epi16(t1, _mm_set1_epi16(N));
+            t2 = _mm_mullo_epi16(t2, _mm_set1_epi16(N));
+            vuint8 t = _mm_packus_epi16(t1, t2);
             //display_vuint8(t, " %3d", "  vT"); puts("");
 
             vV_1 = _mm_add_epi8(vV_1, tmp); // Conversion u->s
