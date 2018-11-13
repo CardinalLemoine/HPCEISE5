@@ -9,7 +9,7 @@ uint8** sigma_delta_sse (uint8 **I, uint8 **M_1, uint8 **V_1, long nrl, long nrh
         for(long j=ncl; j<nch; j+=16)
         {
             vuint8 ones = _mm_set1_epi8(1);
-            vuint8 tmp = _mm_set1_epi8(-128);
+            vsint8 tmp = _mm_set1_epi8(-128);
 
             vuint8 vI = _mm_load_si128((vuint8*) &I[i][j]);
             //display_vuint8(vI, " %3d", "  vI"); puts("");
