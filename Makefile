@@ -1,15 +1,13 @@
-FILE = algo.c main.c nrutil.c test.c vnrutil.c
+FILE = main.c morpho.c mouvement_sse.c mouvement.c nrutil.c roc.c test_morpho.c test_mouvement_sse.c test_mouvement.c vnrutil.c
 SRC = $(addprefix src/, $(FILE))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(basename $(FILE))))
 EXEC = hpc
-
-all: $(EXEC)
 
 $(EXEC): $(OBJ)
 	gcc -o $@ $^ -lm
 
 obj/%.o: src/%.c
-	gcc -c -o $@ $< -Iinclude -mssse3
+	gcc -c -o $@ $< -Iinclude -msse4.2
 
 clean:
 	rm -f $(EXEC) $(OBJ)
