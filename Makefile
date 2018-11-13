@@ -7,7 +7,7 @@ $(EXEC): $(OBJ)
 	gcc -o $@ $^ -lm
 
 obj/%.o: src/%.c
-	gcc -c -o $@ $< -Iinclude -msse4.2
+	gcc -c -o $@ $< -Iinclude -msse4.2 -g
 
 clean:
 	rm -f $(EXEC) $(OBJ)
