@@ -1,4 +1,4 @@
-FILE = main.c morpho.c mouvement_sse.c mouvement.c nrutil.c roc.c test_morpho.c test_mouvement_sse.c test_mouvement.c vnrutil.c
+FILE = main.c morpho_sse.c morpho.c mouvement_sse.c mouvement.c nrutil.c roc.c test_morpho_sse.c test_morpho.c test_mouvement_sse.c test_mouvement.c vnrutil.c
 SRC = $(addprefix src/, $(FILE))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(basename $(FILE))))
 EXEC = hpc
