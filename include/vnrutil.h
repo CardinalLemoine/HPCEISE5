@@ -21,7 +21,7 @@ extern "C" {
 #include <mmintrin.h>
 #include <immintrin.h>
 #include <tmmintrin.h>
-    
+
 #include "nrdef.h"
 #include "vnrdef.h"
     

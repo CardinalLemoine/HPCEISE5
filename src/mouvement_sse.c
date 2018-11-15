@@ -1,8 +1,34 @@
 #include "mouvement_sse.h"
 
+uint8** frame_difference_sse(uint8** frame1, uint8** frame2, long nrl, long nrh, long ncl, long nch){
+	
+	uint8** f_diff = ui8matrix(nrl-EDGE_SSE, nrh+EDGE_SSE, ncl-EDGE_SSE, nch+EDGE_SSE);
+	vuint8 vPix1 = init_vuint8(0);
+	vuint8 vPix2 = init_vuint8(0);
+	vuint8 vDiff = init_vuint8(0);
+	vuint8 vIsBigger = init_vuint8(0);
+	vuint8 vSeuil = init_vuint8(FD_SEUIL);
+	vuint8 valBlanc = init_vuint8(255);
+
+	for(int i=nrl; i<nrh; i++){
+    	for(int j=ncl; j<nch; j+=16){
+            vPix1 = _mm_load_si128((vuint8*) &frame1[i][j]);
+			vPix2 = _mm_load_si128((vuint8*) &frame2[i][j]);
+			vDiff = _mm_abs_epi8(_mm_sub_epi8(vPix1, vPix2));
+			vIsBigger = _mm_cmpgt_epi8(vDiff, vSeuil);
+			vIsBigger = _mm_and_si128(vIsBigger,valBlanc);
+			_mm_store_si128((vuint8*) &f_diff[i][j], vIsBigger);
+		}
+	}
+
+    return f_diff;
+
+}
+
+
 uint8** sigma_delta_sse (uint8 **I, uint8 **M_1, uint8 **V_1, long nrl, long nrh, long ncl, long nch)
 {
-    uint8** E = ui8matrix(nrl, nrh, ncl, nch);
+    uint8** E = ui8matrix(nrl-EDGE_SSE, nrh+EDGE_SSE, ncl-EDGE_SSE, nch+EDGE_SSE);
 
     for(long i=nrl; i<nrh; i++)
     {

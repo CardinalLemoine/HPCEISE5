@@ -39,6 +39,38 @@ Par ailleurs une bordure noire se forme sur le images pgm de sortie, cela est no
 que nos matrices de sorties ont été initialisées à 0 ( donc couleur noire ) : l'arrière plan
 de la matrice initialisé est noire alors que l'arrière plan de l'image de test est blanc
 *******************************************************************************************/
+void test_morpho_old(){
+	long nrl = 0;
+	long nrh = 0;
+	long ncl = 0;
+	long nch = 0;
+	char *filename ="test1.pgm";
+	char *filerosion ="erosion.pgm";
+	char *filouverture ="ouverture.pgm";	
+	char *filedilatation ="dialatation.pgm";
+	char *filefermeture ="fermeture.pgm";
+	uint8 **seq0 = LoadPGM_ui8matrix(filename, &nrl, &nrh, &ncl, &nch);
+	uint8 **seq = wrapping(seq0,nrl,nrh,ncl,nch);
+
+	uint8 **seqero = erosion_old(seq,nrl, nrh, ncl, nch);
+	uint8 **seqdil = dilatation_old(seq,nrl, nrh, ncl, nch);
+	uint8 **seqouv = ouverture_old(seq,nrl, nrh, ncl, nch);
+	uint8 **seqfer = fermeture_old(seq,nrl, nrh, ncl, nch);
+
+	
+ 	/*SavePGM_ui8matrix(seqero, nrl, nrh, ncl, nch, filerosion);
+ 	SavePGM_ui8matrix(seqdil, nrl, nrh, ncl, nch, filedilatation);
+ 	SavePGM_ui8matrix(seqouv, nrl, nrh, ncl, nch, filouverture);
+ 	SavePGM_ui8matrix(seqfer, nrl, nrh, ncl, nch, filefermeture);*/
+	
+	free_ui8matrix(seq0, nrl, nrh, ncl, nch);	
+	free_ui8matrix(seq, nrl-2, nrh+2, ncl-2, nch+2);
+	free_ui8matrix(seqero, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqdil, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqouv, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqfer, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);	 
+}
+
 void test_morpho(){
 	long nrl = 0;
 	long nrh = 0;
@@ -49,7 +81,6 @@ void test_morpho(){
 	char *filouverture ="ouverture.pgm";	
 	char *filedilatation ="dialatation.pgm";
 	char *filefermeture ="fermeture.pgm";
-	printf("Performing unitary tests for morpho transformation...");
 	uint8 **seq0 = LoadPGM_ui8matrix(filename, &nrl, &nrh, &ncl, &nch);
 	uint8 **seq = wrapping(seq0,nrl,nrh,ncl,nch);
 
@@ -58,12 +89,15 @@ void test_morpho(){
 	uint8 **seqouv = ouverture(seq,nrl, nrh, ncl, nch);
 	uint8 **seqfer = fermeture(seq,nrl, nrh, ncl, nch);
 
- 	SavePGM_ui8matrix(seqero, nrl, nrh, ncl, nch, filerosion);
+	/*SavePGM_ui8matrix(seqero, nrl, nrh, ncl, nch, filerosion);
  	SavePGM_ui8matrix(seqdil, nrl, nrh, ncl, nch, filedilatation);
  	SavePGM_ui8matrix(seqouv, nrl, nrh, ncl, nch, filouverture);
- 	SavePGM_ui8matrix(seqfer, nrl, nrh, ncl, nch, filefermeture);
+ 	SavePGM_ui8matrix(seqfer, nrl, nrh, ncl, nch, filefermeture);*/
 
-	printf("Done.\n\n");
-
+	free_ui8matrix(seq0, nrl, nrh, ncl, nch);	
+	free_ui8matrix(seq, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqero, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqdil, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqouv, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+	free_ui8matrix(seqfer, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);	 
 }
-

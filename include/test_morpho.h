@@ -8,3 +8,4 @@
 
 uint8** wrapping(uint8 **m,long nrl,long nrh,long ncl, long nch);
 void test_morpho();
+void test_morpho_old();

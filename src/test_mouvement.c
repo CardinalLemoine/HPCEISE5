@@ -41,7 +41,7 @@ void fd_routine(){
  		SavePGM_ui8matrix(fd[i], nrl, nrh, ncl, nch, filename);
 	}
 
-	//On applique une morpho
+	/*//On applique une morpho
 	printf("Applying Morpho...\n");
 	for(int i=0;i<FRAME_COUNT-1;i++){
  		fd_morpho[i] = erosion(fd[i], nrl, nrh, ncl, nch); 
@@ -52,7 +52,7 @@ void fd_routine(){
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		sprintf(filename,"fdmorph_hall/hall%06d.pgm",i);
  		SavePGM_ui8matrix(fd_morpho[i], nrl, nrh, ncl, nch, filename);
-	}
+	}*/
 	
 	//On libere de la bonne memoire precieuse
 	printf("Cleaning Matrix...\n");
@@ -127,7 +127,7 @@ void sd_routine(){
 	}
 
 	//On applique une morpho
-	printf("Applying Morpho...\n");
+	/*printf("Applying Morpho...\n");
 	for(int i=0;i<FRAME_COUNT-1;i++){
  		sd_morpho[i] = erosion(sd[i], nrl, nrh, ncl, nch); 
 	}
@@ -137,7 +137,7 @@ void sd_routine(){
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		sprintf(filename,"sdmorph_hall/hall%06d.pgm",i);
  		SavePGM_ui8matrix(sd_morpho[i], nrl, nrh, ncl, nch, filename);
-	}
+	}*/
 
 	//On libere de la bonne memoire precieuse
 	printf("Cleaning Matrix...\n");
@@ -148,6 +148,7 @@ void sd_routine(){
 	free_ui8matrix(v, nrl, nrh, ncl, nch);
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		free_ui8matrix(sd[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+		//free_ui8matrix(sd_morpho[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
 		free_ui8matrix(sequence[i], nrl, nrh, ncl, nch);
 	}
 	free_ui8matrix(sequence[FRAME_COUNT-1], nrl, nrh, ncl, nch);

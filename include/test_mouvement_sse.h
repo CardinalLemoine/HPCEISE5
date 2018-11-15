@@ -8,7 +8,5 @@
 
 #include <string.h>
 
-#define FRAME_COUNT 300 // Nombre d'images dans la sequence de frames
-
 void fd_routine_sse();
 void sd_routine_sse();
