@@ -68,6 +68,7 @@ uint8** sigma_delta_sse (uint8 **I, uint8 **M_1, uint8 **V_1, long nrl, long nrh
             //display_vuint8(t, " %3d", "  vT"); puts("");
 
             vV_1 = _mm_add_epi8(vV_1, tmp); // Conversion u->s
+            t = _mm_add_epi8(t, tmp); // Conversion u->s
             vLT = _mm_and_si128(ones, _mm_cmplt_epi8(vV_1, t)); // Garder le LSB
             vGT = _mm_and_si128(ones, _mm_cmpgt_epi8(vV_1, t));
             vuint8 vV = _mm_add_epi8(vV_1, vLT);
