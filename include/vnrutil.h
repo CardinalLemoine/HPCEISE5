@@ -9,7 +9,7 @@
 #ifndef __VNRUTIL_H__
 #define __VNRUTIL_H__
 
-#pragma message("  include vnrutil.h")
+//#pragma message("  include vnrutil.h")
 
 #ifdef __cplusplus
 #pragma message ("C++")

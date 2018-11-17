@@ -99,5 +99,5 @@ void test_morpho(){
 	free_ui8matrix(seqero, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
 	free_ui8matrix(seqdil, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
 	free_ui8matrix(seqouv, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
-	free_ui8matrix(seqfer, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);	 
+	free_ui8matrix(seqfer, nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
 }

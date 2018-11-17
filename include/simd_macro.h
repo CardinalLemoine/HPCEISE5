@@ -6,7 +6,7 @@
 #ifndef __SIMD_MACRO_H__
 #define __SIMD_MACRO_H__
 
-#pragma message("  include  simd_macro.h")
+//#pragma message("  include  simd_macro.h")
 
 // -----------------------
 // melanges / permutations

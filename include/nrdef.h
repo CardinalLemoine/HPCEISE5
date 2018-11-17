@@ -6,7 +6,7 @@
 #ifndef __NR_DEF_H__
 #define __NR_DEF_H__
 
-#pragma message("  include  nrdef.h")
+//#pragma message("  include  nrdef.h")
 
 typedef unsigned char byte;
 

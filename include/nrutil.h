@@ -9,7 +9,7 @@
 #ifndef __NRUTIL_H__
 #define __NRUTIL_H__
 
-#pragma message("  include  nrutil.h")
+//#pragma message("  include  nrutil.h")
 
 #ifdef __cplusplus
 #pragma message ("C++")

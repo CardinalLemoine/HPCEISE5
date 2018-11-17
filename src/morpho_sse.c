@@ -1,14 +1,11 @@
 #include "morpho_sse.h"
 
-uint8** erosion_sse(uint8 **frame, long nrl, long nrh, long ncl, long nch)
-{
+uint8** erosion_sse(uint8 **frame, long nrl, long nrh, long ncl, long nch){
     uint8 **f_ero = ui8matrix(nrl-EDGE_SSE, nrh+EDGE_SSE, ncl-EDGE_SSE, nch+EDGE);
  	vuint8 out;
 
-    for(long i=nrl; i<nrh; i++)
-    {
-        for(long j=ncl; j<nch; j+=16)
-        {
+    for(long i=nrl; i<=nrh; i++){
+        for(long j=ncl; j<=nch; j+=16){
             out = _mm_set1_epi8(0xff);
             
             out = _mm_and_si128(out, _mm_loadu_si128((vuint8 *) &frame[i-1][j-1]));
@@ -28,15 +25,12 @@ uint8** erosion_sse(uint8 **frame, long nrl, long nrh, long ncl, long nch)
     return f_ero;
 }
 
-uint8** dilatation_sse(uint8 **frame, long nrl,long nrh,long ncl, long nch)
-{
+uint8** dilatation_sse(uint8 **frame, long nrl,long nrh,long ncl, long nch){
     uint8 **f_ero = ui8matrix(nrl-EDGE_SSE, nrh+EDGE_SSE, ncl-EDGE_SSE, nch+EDGE_SSE);
  	vuint8 out;
 
-    for(long i=nrl; i<nrh; i++)
-    {
-        for(long j=ncl; j<nch; j+=16)
-        {
+    for(long i=nrl; i<nrh; i++){
+        for(long j=ncl; j<nch; j+=16){
             out = _mm_setzero_si128();
             
             out = _mm_or_si128(out, _mm_loadu_si128((vuint8 *) &frame[i-1][j-1]));
