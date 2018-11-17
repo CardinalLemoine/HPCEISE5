@@ -33,7 +33,7 @@ void fd_routine(){
 	printf("Applying FD Algorithm...\n");	
 	for(int i=1;i<FRAME_COUNT;i++){
 		fd[i-1] = frame_difference(sequence[i-1],sequence[i], nrl, nrh, ncl, nch);
-		if(i%10 == 1){
+		/*if(i%10 == 1){
 			char filetruth[30];
 			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i-1);
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
@@ -43,7 +43,7 @@ void fd_routine(){
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
-		}
+		}*/
 	}
 
 	//Sauvegarde output frame difference
@@ -119,18 +119,18 @@ void sd_routine(){
 	{
 		sd[i-1] = sigma_delta(sequence[i], m, v, nrl, nrh, ncl, nch);
 
-		if(i%10 == 1)
+		/*if(i%10 == 1)
 		{
 			char filetruth[30];
-			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i-1);
+			sprintf(filetruth, "verite_SIMD/hall%06ld.pgm", i-1);
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
 			uint32 **roc_matrix = roc(truth_sequence, sd[i-1], nrl, nrh, ncl, nch);
-			printf("ROC maxtrix for i=%d\n", i-1);
+			printf("ROC maxtrix for i=%ld\n", i-1);
 			display_ui32matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
-		}
+		}*/
 	}
 
 	//Sauvegarde output frame difference

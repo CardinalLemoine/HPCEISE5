@@ -30,7 +30,7 @@ void fd_routine_sse(){
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
 			uint32 **roc_matrix = roc(truth_sequence, fdSIMD[i-1], nrl, nrh, ncl, nch);
 			printf("ROC maxtrix for i=%d\n", i-1);
-			display_ui8matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
+			display_ui32matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
@@ -93,7 +93,7 @@ void sd_routine_sse(){
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
 			uint32 **roc_matrix = roc(truth_sequence, sdSIMD[i-1], nrl, nrh, ncl, nch);
 			printf("ROC maxtrix for i=%d\n", i-1);
-			display_ui8matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
+			display_ui32matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
