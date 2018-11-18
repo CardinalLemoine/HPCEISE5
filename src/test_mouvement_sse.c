@@ -24,7 +24,7 @@ void fd_routine_sse(){
 	printf("Applying FD SIMD Algorithm...\n");	
 	for(int i=1;i<FRAME_COUNT;i++){
 		fdSIMD[i-1] = frame_difference_sse(sequence[i-1],sequence[i], nrl, nrh, ncl, nch);
-		if(i%10 == 1){
+		/*if(i%10 == 1){
 			char filetruth[30];
 			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i-1);
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
@@ -34,7 +34,7 @@ void fd_routine_sse(){
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
-		}	
+		}*/	
 	}
 
 	//Sauvegarde output frame difference
@@ -75,7 +75,6 @@ void sd_routine_sse(){
 	//Application de l'algo Sigma Delta
 	printf("Applying SD SIMD Algorithm...\n");
 	uint8 **m = ui8matrix(nrl, nrh, ncl, nch);
-	uint8 **o = ui8matrix(nrl, nrh, ncl, nch);
 	uint8 **v = ui8matrix(nrl, nrh, ncl, nch);
 
 	for(int i=nrl; i<=nrh; i++){
@@ -109,7 +108,6 @@ void sd_routine_sse(){
 	//On libere de la bonne memoire precieuse
 	printf("Cleaning Matrix...\n");
 	free_ui8matrix(m, nrl, nrh, ncl, nch);
-	free_ui8matrix(o, nrl, nrh, ncl, nch);
 	free_ui8matrix(v, nrl, nrh, ncl, nch);
 
 	for(int i=0;i<FRAME_COUNT-1;i++){

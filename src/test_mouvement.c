@@ -33,7 +33,7 @@ void fd_routine(){
 	printf("Applying FD Algorithm...\n");	
 	for(int i=1;i<FRAME_COUNT;i++){
 		fd[i-1] = frame_difference(sequence[i-1],sequence[i], nrl, nrh, ncl, nch);
-		/*if(i%10 == 1){
+		if(i%10 == 1){
 			char filetruth[30];
 			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i-1);
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
@@ -43,7 +43,7 @@ void fd_routine(){
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
-		}*/
+		}
 	}
 
 	//Sauvegarde output frame difference
@@ -53,10 +53,21 @@ void fd_routine(){
  		SavePGM_ui8matrix(fd[i], nrl, nrh, ncl, nch, filename);
 	}
 
-	/*//On applique une morpho
+	//On applique une morpho
 	printf("Applying Morpho...\n");
 	for(int i=0;i<FRAME_COUNT-1;i++){
- 		fd_morpho[i] = erosion(fd[i], nrl, nrh, ncl, nch); 
+ 		fd_morpho[i] = ouverture(fd[i], nrl, nrh, ncl, nch);
+		if(i%10 == 0){
+			char filetruth[30];
+			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i);
+			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
+			uint32 **roc_matrix = roc(truth_sequence, fd_morpho[i], nrl, nrh, ncl, nch);
+			printf("ROC maxtrix for i=%d\n", i);
+			display_ui32matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
+
+			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
+			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
+		}
 	}
 
 	//Sauvegarde output frame difference + morpho
@@ -64,12 +75,13 @@ void fd_routine(){
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		sprintf(filename,"fdmorph_hall/hall%06d.pgm",i);
  		SavePGM_ui8matrix(fd_morpho[i], nrl, nrh, ncl, nch, filename);
-	}*/
+	}
 	
 	//On libere de la bonne memoire precieuse
 	printf("Cleaning Matrix...\n");
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		free_ui8matrix(fd[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+		free_ui8matrix(fd_morpho[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
 		free_ui8matrix(sequence[i], nrl, nrh, ncl, nch);
 	}
 	free_ui8matrix(sequence[FRAME_COUNT-1], nrl, nrh, ncl, nch);
@@ -115,22 +127,20 @@ void sd_routine(){
 		}
 	}
 
-	for(long i=1; i<FRAME_COUNT; i++)
+	for(int i=1; i<FRAME_COUNT; i++)
 	{
 		sd[i-1] = sigma_delta(sequence[i], m, v, nrl, nrh, ncl, nch);
-
-		/*if(i%10 == 1)
-		{
+		if(i%10 == 1){
 			char filetruth[30];
-			sprintf(filetruth, "verite_SIMD/hall%06ld.pgm", i-1);
+			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i-1);
 			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
 			uint32 **roc_matrix = roc(truth_sequence, sd[i-1], nrl, nrh, ncl, nch);
-			printf("ROC maxtrix for i=%ld\n", i-1);
+			printf("ROC maxtrix for i=%d\n", i-1);
 			display_ui32matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
 
 			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
 			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
-		}*/
+		}
 	}
 
 	//Sauvegarde output frame difference
@@ -141,17 +151,28 @@ void sd_routine(){
 	}
 
 	//On applique une morpho
-	/*printf("Applying Morpho...\n");
+	printf("Applying Morpho...\n");
 	for(int i=0;i<FRAME_COUNT-1;i++){
- 		sd_morpho[i] = erosion(sd[i], nrl, nrh, ncl, nch); 
+ 		sd_morpho[i] = fermeture(sd[i], nrl, nrh, ncl, nch);
+		if(i%10 == 0){
+			char filetruth[30];
+			sprintf(filetruth, "verite_SIMD/hall%06d.pgm", i);
+			uint8 **truth_sequence = LoadPGM_ui8matrix(filetruth, &nrl, &nrh, &ncl, &nch);
+			uint32 **roc_matrix = roc(truth_sequence, sd_morpho[i], nrl, nrh, ncl, nch);
+			printf("ROC maxtrix for i=%d\n", i);
+			display_ui32matrix(roc_matrix, 0, 1, 0, 1, " %5u", "ROC");
+
+			free_ui8matrix(truth_sequence, nrl, nrh, ncl, nch);
+			free_ui32matrix(roc_matrix, 0, 1, 0, 1);
+		}
 	}
 
 	//Sauvegarde output frame difference + morpho
-	printf("Saving FD+Morpho sequence...\n");
+	printf("Saving SD+Morpho sequence...\n");
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		sprintf(filename,"sdmorph_hall/hall%06d.pgm",i);
  		SavePGM_ui8matrix(sd_morpho[i], nrl, nrh, ncl, nch, filename);
-	}*/
+	}
 
 	//On libere de la bonne memoire precieuse
 	printf("Cleaning Matrix...\n");
@@ -159,7 +180,7 @@ void sd_routine(){
 	free_ui8matrix(v, nrl, nrh, ncl, nch);
 	for(int i=0;i<FRAME_COUNT-1;i++){
 		free_ui8matrix(sd[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
-		//free_ui8matrix(sd_morpho[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
+		free_ui8matrix(sd_morpho[i], nrl-EDGE, nrh+EDGE, ncl-EDGE, nch+EDGE);
 		free_ui8matrix(sequence[i], nrl, nrh, ncl, nch);
 	}
 	free_ui8matrix(sequence[FRAME_COUNT-1], nrl, nrh, ncl, nch);
